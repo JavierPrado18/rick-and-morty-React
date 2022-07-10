@@ -1,18 +1,19 @@
 import React from 'react';
 
 const Pagination = ({pag,setPag,amount}) => {
+    
     const previous=()=>{
         if (pag==0){
             setPag(0)
         }else{
-            setPag(pag-4)
+            setPag(pag-8)
         }    
     }
     const next=()=>{
         if (pag>=amount){
             setPag(pag)
         }else{
-            setPag(pag+3)
+            setPag(pag+8)
         }    
     }
     return (

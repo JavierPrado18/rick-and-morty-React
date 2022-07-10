@@ -13,39 +13,43 @@ function App() {
   const [location,setLocation]=useState({});
   const [pag,setPag]=useState(0)
   
-  const newArray=location.residents?.slice(pag,pag+3)
+  const newArray=location.residents?.slice(pag,pag+8)
+
   useEffect(()=>{
         const random=Math.floor(Math.random()*126)+1;
         axios.get(`https://rickandmortyapi.com/api/location/${random}`)
             .then(res=>setLocation(res.data))
     },[])
     
-  console.log(location);
-    const searchType=()=>{
+    const searchLocation=()=>{
         axios.get(`https://rickandmortyapi.com/api/location/${searchValue}`)
             .then(res=>setLocation(res.data))
-    }
+            .finally(()=>setPag(0))
+      }
  
   
   return (
     <div className="App">
-      <header>
+      <a href="#header" className='btn-top'><i class="fa-solid fa-angle-up"></i></a>
+      <header id='header'>
         <img  src='https://1000marcas.net/wp-content/uploads/2022/04/Rick-and-Morty.png' alt="" />
         <div>
             <input type="text" placeholder='Ingresa el ID' value={searchValue} onChange={(e)=>setSearchValue(e.target.value)} />
-            <button onClick={searchType} ><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button onClick={searchLocation} ><i class="fa-solid fa-magnifying-glass"></i></button>
 
         </div>
       </header>
       
-      <Location location={location}/>
-      <>
+        <Location location={location}/>
+    
+      <div className='container-cards'>
         {newArray?.map((resident) => (
           <ResidentItem resident={resident} key={resident} />
         ))}
-      </>
-      <Pagination pag={pag} setPag={setPag} amount={location.residents?.length}/>
-      
+      </div>
+      <div className='container-btn'>
+        <Pagination pag={pag} setPag={setPag} amount={location.residents?.length}/>
+        </div>
     </div>
   )
 }
